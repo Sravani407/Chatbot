@@ -9,17 +9,52 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chatBot.chatBotApp.model.userMessage;
 import com.chatBot.chatBotApp.service.*;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/chat")
+@RequestMapping("/api")
 public class chatController {
 
-    @Autowired
-    private rasaService rasaService;
+    @PostMapping("/chat")
+    public ChatResponse chat(@RequestBody ChatMessage chatMessage) {
+        // You can use the message to communicate with Rasa or another bot framework
+        String botReply = getBotReply(chatMessage.getMessage());  // Get bot's reply (e.g., via Rasa API)
 
-    @PostMapping
-    public ResponseEntity<?> chat(@RequestBody userMessage userMessage) {
-        String botReply = rasaService.sendMessageToRasa(userMessage.getMessage());
-        return ResponseEntity.ok(botReply);
+        // Return the response to the frontend
+        return new ChatResponse(botReply);
+    }
+
+    // Example method to simulate a bot response
+    private String getBotReply(String message) {
+        // Call Rasa or any other logic here to get a real bot response
+        return "You said: " + message;  // Simple mock reply
+    }
+
+    // Inner class to represent the message sent by the user
+    public static class ChatMessage {
+        private String message;
+
+        // Getters and Setters
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+    }
+
+    // Inner class to represent the response from the bot
+    public static class ChatResponse {
+        private String reply;
+
+        public ChatResponse(String reply) {
+            this.reply = reply;
+        }
+
+        // Getter
+        public String getReply() {
+            return reply;
+        }
     }
 }

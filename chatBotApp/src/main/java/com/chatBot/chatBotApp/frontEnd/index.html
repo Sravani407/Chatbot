@@ -1,12 +1,20 @@
-async function sendMessage() {
-    const userMessage = document.getElementById("message").value;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+</head>
+<body>
+    <h1>Chat with Bot</h1>
+    <form id="chatForm">
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required />
+        <button type="submit">Send</button>
+    </form>
 
-    const response = await fetch("http://localhost:8080/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage })
-    });
+    <div id="response"></div>
 
-    const result = await response.json();
-    // Display result[0].text in your chat UI
-}
+    <script src="script.js"></script>
+</body>
+</html>
