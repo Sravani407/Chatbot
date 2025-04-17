@@ -1,0 +1,12 @@
+async function sendMessage() {
+    const userMessage = document.getElementById("message").value;
+
+    const response = await fetch("http://localhost:8080/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMessage })
+    });
+
+    const result = await response.json();
+    // Display result[0].text in your chat UI
+}
